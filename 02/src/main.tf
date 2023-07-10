@@ -8,17 +8,30 @@ resource "yandex_vpc_subnet" "develop" {
   v4_cidr_blocks = var.default_cidr
 }
 
+metadata = {
+   serial-port-enable = var.vms_ssh_root_key.serial-port-enable
+   ssh-keys           = var.vms_ssh_root_key.ssh-keys
+  }
+}
+
+resource "yandex_compute_instance" platform-db" {
+
 
 data "yandex_compute_image" "ubuntu" {
-  family = "ubuntu-2004-lts"
+#  family = "ubuntu-2004-lts"
+   family =  var.vm_web_image
 }
 resource "yandex_compute_instance" "platform" {
   name        = "netology-develop-platform-web"
-  platform_id = "standart-v4"
+  platform_id = "standard-v2"
   resources {
-    cores         = 1
-    memory        = 1
-    core_fraction = 5
+     cores         = var.vm_web_cores
+     memory        = var.vm_web_mem
+     core_fraction = var.vm_web_frac
+
+#    cores         = 2
+#    memory        = 1
+#    core_fraction = 5
   }
   boot_disk {
     initialize_params {

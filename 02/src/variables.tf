@@ -32,6 +32,64 @@ variable "vpc_name" {
 }
 
 
+###name VM vars
+
+variable "vm_web_web" {
+  type        = string
+  default     = "netology-develop-platform-web"
+  description = "VM1 name"
+}
+
+variable "vm_web_db" {
+  type        = string
+  default     = "netology-develop-platform-db"
+  description = "VM2 name"
+}
+
+resource "yandex_compute_instance" "platform" {
+
+# name        = var.vm_web_web
+  name        = "${local.web}"
+  platform_id = "standard-v2"
+  resources {
+
+resource "yandex_compute_instance" "platform-db" {
+
+  name        = "${local.db}"
+  platform_id = "standard-v2"
+  resources {
+    cores        = var.vm_db_resources.cores
+    cores        = var.vm_db_resources.memory
+    cores        = var.vm_db_resources.core_fraction
+ }
+
+###yandex_compute_image vars
+variable "vm_web_image" {
+  type        = string
+  default     = "ubuntu-2004-lts"
+  description = "ubuntu release name"
+}
+
+###yandex_compute_instance vars
+
+variable "vm_web_cores" {
+  type        = number
+  default     = 2
+  description = "cores"
+}
+
+variable "vm_web_mem" {
+  type        = number
+  default     = 1
+  description = "fraction"
+}
+
+variable "vm_web_frac" {
+  type        = number
+  default     = 5
+  description = "memory"
+}
+
 ###ssh vars
 
 variable "vms_ssh_root_key" {
