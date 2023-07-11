@@ -52,7 +52,10 @@ resource "yandex_compute_instance" "platform" {
   name        = "${local.web}"
   platform_id = "standard-v2"
   resources {
-
+    cores        = var.vm_web_resources.cores
+    cores        = var.vm_web_resources.memory
+    cores        = var.vm_web_resources.core_fraction
+ }
 resource "yandex_compute_instance" "platform-db" {
 
   name        = "${local.db}"
@@ -71,7 +74,7 @@ variable "vm_web_image" {
 }
 
 ###yandex_compute_instance vars
-
+### VM1
 variable "vm_web_cores" {
   type        = number
   default     = 2
@@ -80,15 +83,36 @@ variable "vm_web_cores" {
 
 variable "vm_web_mem" {
   type        = number
-  default     = 1
+  default     = 2
   description = "fraction"
 }
 
 variable "vm_web_frac" {
   type        = number
-  default     = 5
+  default     = 20
   description = "memory"
 }
+
+###yandex_compute_instance vars
+### VM2
+variable "vm_db_cores" {
+  type        = number
+  default     = 2
+  description = "cores"
+}
+
+variable "vm_db_mem" {
+  type        = number
+  default     = 2
+  description = "fraction"
+}
+
+variable "vm_db_frac" {
+  type        = number
+  default     = 20
+  description = "memory"
+}
+
 
 ###ssh vars
 

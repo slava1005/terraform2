@@ -3,6 +3,6 @@ locals {
 }
 
 locals {
-   web = "${var.vm_web_db}"
+   db = "${var.vm_web_db}"
 }
 
