@@ -8,53 +8,21 @@ resource "yandex_vpc_subnet" "develop" {
   v4_cidr_blocks = var.default_cidr
 }
 
-#metadata = {
-#   serial-port-enable = var.vms_ssh_root_key.serial-port-enable
-#   ssh-keys           = var.vms_ssh_root_key.ssh-keys
-#  }
-#}
-#
-#resource "yandex_compute_instance" "platform-db" {
-
-# VM1
-
 data "yandex_compute_image" "ubuntu" {
-  family = "ubuntu-2004-lts"
-#   family =  var.vm_web_image
+
+   family = var.vm_web_image
 }
+
 resource "yandex_compute_instance" "platform" {
-  name        = "netology-develop-platform-web"
-  platform_id = "standard-v2"
+  name        = "${local.web}"
+  platform_id = "standard-v1"
   resources {
-#     cores         = var.vm_web_cores
-#     memory        = var.vm_web_mem
-#     core_fraction = var.vm_web_frac
-
-    cores         = 2
-    memory        = 1
-    core_fraction = 5
-  }
-
-# VM2
-
-data "yandex_compute_image" "ubuntu" {
-  family = "ubuntu-2004-lts"
+    cores         = var.vm_web_resources.cores
+    memory        = var.vm_web_resources.memory
+    core_fraction = var.vm_web_resources.core_fraction
 }
-resource "yandex_compute_instance" "platform" {
-  name        = "netology-develop-platform-db"
-  platform_id = "standard-v2"
-  resources {
-#     cores         = var.vm_db_cores
-#     memory        = var.vm_db_mem
-#     core_fraction = var.vm_db_frac
 
-    cores         = 2
-    memory        = 2
-    core_fraction = 20
-  }
-
-
-boot_disk {
+  boot_disk {
     initialize_params {
       image_id = data.yandex_compute_image.ubuntu.image_id
     }
@@ -68,8 +36,36 @@ boot_disk {
   }
 
   metadata = {
-    serial-port-enable = 1
-    ssh-keys           = "ubuntu:${var.vms_ssh_root_key}"
+    serial-port-enable = var.vms_ssh_root_key.serial-port-enable
+    ssh-keys           = var.vms_ssh_root_key.ssh-keys
+  }
+}
+
+resource "yandex_compute_instance" "platform-db" {
+
+  name        = "${local.db}"
+  platform_id = "standard-v1"
+  resources {
+    cores         = var.vm_db_resources.cores
+    memory        = var.vm_db_resources.memory
+    core_fraction = var.vm_db_resources.core_fraction
+}
+
+  boot_disk {
+    initialize_params {
+      image_id = data.yandex_compute_image.ubuntu.image_id
+    }
+  }
+  scheduling_policy {
+    preemptible = true
+  }
+  network_interface {
+    subnet_id = yandex_vpc_subnet.develop.id
+    nat       = true
   }
 
+  metadata = {
+    serial-port-enable = var.vms_ssh_root_key.serial-port-enable
+    ssh-keys           = var.vms_ssh_root_key.ssh-keys
+  }
 }
