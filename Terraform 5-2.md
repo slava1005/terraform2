@@ -12,10 +12,10 @@
 
 - скриншот ЛК Yandex Cloud с созданной ВМ,
 
-![](Terraform 2/unit 1.jpg)
+![unit 1](https://github.com/slava1005/terraform2/assets/114395964/d80e3b99-9892-459d-b5d7-02290683bf03)
 
 - скриншот успешного подключения к консоли ВМ через ssh,
-
+![07-terraform-SSH logon](https://github.com/slava1005/terraform2/assets/114395964/59cbf3bc-4d92-44b6-b229-becefcf215d4)
 
 - ответы на вопросы.
 
