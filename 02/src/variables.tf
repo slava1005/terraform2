@@ -51,7 +51,7 @@ variable "vm_web_image" {
   default     = "ubuntu-2004-lts"
   description = "ubuntu release name"
 }
-### Объявим переменные
+### Объявим переменные для VM1
 variable "neto" {
   type        = string
   description = "netology"
@@ -68,9 +68,27 @@ variable "role" {
   type        = string
   description = "web"
 }
-locals {
-  name_vm1    = "${var.neto}-${var.env}-${var.project}-${var.role}"
+
+### Объявим переменные для VM2
+variable "neto2" {
+  type        = string
+  description = "netology"
 }
+variable "env2" {
+  type        = string
+  description = "develop"
+}
+variable "project2" {
+  type        = string
+  description = "platform"
+}
+variable "role2" {
+  type        = string
+  description = "db"
+}
+###locals {
+###  name_vm1    = "${var.neto}-${var.env}-${var.project}-${var.role}"
+###}
 
 ###name VM vars
 variable "vm_web_web" {
@@ -81,7 +99,8 @@ variable "vm_web_web" {
 
 variable "vm_web_db" {
   type        = string
-  default     = "netology-develop-platform-db"
+  default     = "name_vm2"
+###  default     = "netology-develop-platform-db"
   description = "VM2 name"
 }
 
