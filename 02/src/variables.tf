@@ -1,4 +1,4 @@
- variable "token" {
+variable "token" {
   type        = string
   description = "OAuth-token; https://cloud.yandex.ru/docs/iam/concepts/authorization/oauth-token"
 }
@@ -29,6 +29,7 @@ variable "vpc_name" {
   default     = "develop"
   description = "VPC network & subnet name"
 }
+
 ###ssh vars
 #variable "vms_ssh_root_key" {
 #  type        = string
@@ -50,10 +51,31 @@ variable "vm_web_image" {
   default     = "ubuntu-2004-lts"
   description = "ubuntu release name"
 }
+### Объявим переменные
+variable "neto" {
+  type        = string
+  description = "netology"
+}
+variable "env" {
+  type        = string
+  description = "develop"
+}
+variable "project" {
+  type        = string
+  description = "platform"
+}
+variable "role" {
+  type        = string
+  description = "web"
+}
+locals {
+  name_vm1    = "${var.neto}-${var.env}-${var.project}-${var.role}"
+}
+
 ###name VM vars
 variable "vm_web_web" {
   type        = string
-  default     = "netology-develop-platform-web"
+  default     = "name_vm1"
   description = "VM1 name"
 }
 
